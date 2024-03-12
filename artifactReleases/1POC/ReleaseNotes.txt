@@ -1,1 +1,6 @@
 Release Notes version 1 POC
+
+* Wave system
+* Wood resource spawning 
+* Coins system
+* Wave system
