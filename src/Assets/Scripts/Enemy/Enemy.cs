@@ -8,11 +8,13 @@ public class Enemy: MonoBehaviour, IDamageable
     [SerializeField] NavMeshAgent agent;
     LayerMask playerMask;
 
+    public PlayerBeacon player;
+
     //Stats
-    float health;
-    float damage;
-    float attackCooldown;
-    float attackRange;
+    [SerializeField] float health;
+    [SerializeField] int damage;
+    [SerializeField] float attackCooldown;
+    [SerializeField] float attackRange;
 
     //function
     bool canAttack = true;
@@ -21,11 +23,7 @@ public class Enemy: MonoBehaviour, IDamageable
     void Awake()
     {
         playerMask = LayerMask.GetMask("Player");
-
-        health = 100;
-        damage = 20;
-        attackCooldown = 1;
-        attackRange = 1;
+        
     }
 
     private void OnDrawGizmos()
@@ -33,12 +31,24 @@ public class Enemy: MonoBehaviour, IDamageable
         Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, new Vector3(1f, 1f, 1f));
     }
 
+    Vector3 playerLoc;
     private void FixedUpdate()
     {
+        if (health <= 0 )
+        {
+            Die();
+        }
+
         playerInRange = Physics.CheckSphere(transform.position, attackRange, playerMask); 
+
         if (!playerInRange)
         {
-            agent.SetDestination(GameManager.Instance.GetPlayerLocation());
+            if (agent.isActiveAndEnabled)
+            {
+                playerLoc.x = player.locX;
+                playerLoc.z = player.locY;
+                agent.SetDestination(playerLoc);
+            } 
         }
         else
         {
@@ -76,13 +86,15 @@ public class Enemy: MonoBehaviour, IDamageable
         canAttack = true;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
     }
 
     public void Die()
     {
-        Destroy(this.gameObject);
+        GameManager.Instance.AddCoin(1);
+        this.gameObject.SetActive(false);
+        health = 100;
     }
 }

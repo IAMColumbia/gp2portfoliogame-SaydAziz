@@ -1,1 +1,6 @@
 Release Notes version 2 Vertical Slice
+
+* Full Architecture Refactor
+* Wood resource now fills in spawns instead of fully replacing
+* UI is now using observer pattern
+* Healer functionality added
