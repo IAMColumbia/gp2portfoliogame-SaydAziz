@@ -43,7 +43,7 @@ public class Fountain : Trinket
     {
         target.TakeDamage(-data.effectAmount);
         canShoot = false;
-        Invoke("ResetShot", data.fireRate);
+        Invoke("ResetShot", data.fireRate / trinketLevel);
     }
 
     public override GameObject GetShadow()

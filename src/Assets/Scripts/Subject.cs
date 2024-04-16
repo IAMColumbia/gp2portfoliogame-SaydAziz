@@ -18,4 +18,8 @@ public abstract class Subject : MonoBehaviour
     {
         observers.ForEach(observer => observer.OnNotify(id));
     }
+    protected void NotifyObservers(PlayerState state)
+    {
+        observers.ForEach(observer => observer.OnNotify(state));
+    }
 }

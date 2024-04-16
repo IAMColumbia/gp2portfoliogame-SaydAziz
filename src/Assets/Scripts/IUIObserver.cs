@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IUIObserver
 {
     public void NotifyUI(int id, int content);
+    public void NotifyUI(Trinket trinket);
 }

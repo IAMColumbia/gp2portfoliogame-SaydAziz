@@ -25,6 +25,13 @@ public class InputManager : MonoBehaviour
     {
         controller.DoMovement(context.ReadValue<Vector2>()); 
     }
+    public void RegisterTrinketMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            controller.ToggleTrinkets();
+        }
+    }
 
     public void RegisterPause(InputAction.CallbackContext context)
     {

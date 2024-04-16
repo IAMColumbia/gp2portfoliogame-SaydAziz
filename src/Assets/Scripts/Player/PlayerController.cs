@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,7 +9,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Camera cam;
     Player player;
-    LayerMask placeLayer;
 
     //Movement Values
     [SerializeField] float moveSpeed = 15;
@@ -17,14 +17,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main;
         rb = GetComponent<Rigidbody>();
         player = GetComponent<Player>();
-        placeLayer = LayerMask.GetMask("Place");
     }
 
     void Start()
     {
+        cam = Camera.main;
         rb.drag = moveDrag; 
     }
 
@@ -51,7 +50,18 @@ public class PlayerController : MonoBehaviour
 
     public void DoClick()
     {
-        player.Purchase();
+        if (player.currentState == PlayerState.Trinket)
+        {
+            player.Purchase();
+        }
+        else if (player.currentState == PlayerState.Normal)
+        {
+            player.ViewTrinket(cam);
+        }
+    }
+    public void ToggleTrinkets()
+    {
+        player.TriggerNormalMode();
     }
 
     public void DoMovement(Vector2 value)
@@ -61,13 +71,7 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateCursorPos(Vector2 mousePos)
     {
-        Ray ray = cam.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100, placeLayer))
-        {
-            player.cursorPos = hit.point;
-        }
+        player.mouseRay = cam.ScreenPointToRay(mousePos);
 
     }
 }

@@ -19,4 +19,8 @@ public class UISubject : Subject
     {
         uiObservers.ForEach(observer => observer.NotifyUI(id, content));
     }
+    protected void NotifyUIObservers(Trinket trinket)
+    {
+        uiObservers.ForEach(observer => observer.NotifyUI(trinket));
+    }
 }

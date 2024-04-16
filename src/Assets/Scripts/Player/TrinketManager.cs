@@ -5,11 +5,14 @@ using UnityEngine;
 public class TrinketManager : MonoBehaviour, IObserver
 {
     Player player;
+    PlayerState pState;
+    LayerMask placeLayer;
+
     [SerializeField] GameObject[] trinketPrefabs;
     [SerializeField] GameObject[] trinketShadows;
     [SerializeField] Grid grid;
-    Camera cam;
-    LayerMask placeLayer;
+
+    Vector3 cursorPos;
 
     //Trinket values
     int selectedTrinket;
@@ -18,8 +21,9 @@ public class TrinketManager : MonoBehaviour, IObserver
     void Start()
     {
         player = GetComponentInParent<Player>();
-        cam = Camera.main;
         player.AddObserver(this);
+
+        placeLayer = LayerMask.GetMask("Place");
 
         for (int i = 0; i < trinketPrefabs.Length; i++)
         {
@@ -35,7 +39,12 @@ public class TrinketManager : MonoBehaviour, IObserver
     // Update is called once per frame
     void Update()
     {
-        Vector3Int gridPos = grid.WorldToCell(player.cursorPos);
+        RaycastHit hit;
+        Physics.Raycast(player.mouseRay, out hit, 100, placeLayer);
+
+        cursorPos = hit.point;
+
+        Vector3Int gridPos = grid.WorldToCell(cursorPos);
         trinketShadows[selectedTrinket].transform.position = grid.GetCellCenterWorld(gridPos);
     }
 
@@ -60,16 +69,37 @@ public class TrinketManager : MonoBehaviour, IObserver
         }
     }
 
-    public void OnNotify(int id)
+    private void StateSwitch()
     {
-        if (id == 0) 
+        if (pState == PlayerState.Trinket)
         {
-            Place();
-            return;
+            trinketShadows[selectedTrinket].SetActive(true);
         }
-        else if (id < 5)
+        else
         {
-            SelectTrinket(id);
+            trinketShadows[selectedTrinket].SetActive(false);
         }
     }
+
+    public void OnNotify(int id)
+    {
+        if (pState == PlayerState.Trinket)
+        {
+            if (id == 0)
+            {
+                Place();
+                return;
+            }
+            else if (id < 5)
+            {
+                SelectTrinket(id);
+            }
+        }
+    }
+    public void OnNotify(PlayerState state)
+    {
+        pState = state;
+        StateSwitch();
+    }
+
 }

@@ -51,7 +51,7 @@ public class Turret : Trinket
         GameObject currentBullet = Instantiate(data.bulletPrefab, bulletSpawn);
         currentBullet.GetComponent<Projectile>().Initialize(target, data.damage);
         canShoot = false;
-        Invoke("ResetShot", data.fireRate * 0.1f);
+        Invoke("ResetShot", (data.fireRate / trinketLevel) * 0.1f);
     }
 
     public override GameObject GetShadow()

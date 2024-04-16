@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5295359477213186247}
   - component: {fileID: 6533541364239320187}
   - component: {fileID: 195884027253397405}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6164182084667799509}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2825712844721013709}
   - component: {fileID: 213775570435417919}
   - component: {fileID: 4126705593568028817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 553489073143913328}
   - component: {fileID: -4499421978861169382}
   - component: {fileID: 4206116834186292414}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 5509592393575687349}
   - component: {fileID: 3014035622222517343}
   - component: {fileID: 1616949150601683096}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 6716583663398051261}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.65, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.17816965, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

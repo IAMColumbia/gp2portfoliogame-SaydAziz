@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3993999486567934952, guid: d50d19418650d1144aaf5a8d6463fc76, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4545824730024986574, guid: d50d19418650d1144aaf5a8d6463fc76, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6039588450991258872, guid: d50d19418650d1144aaf5a8d6463fc76, type: 3}
       propertyPath: m_Name
       value: ShadowHealFountain

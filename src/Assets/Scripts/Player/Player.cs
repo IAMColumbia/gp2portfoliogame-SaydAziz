@@ -2,6 +2,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum PlayerState
+{
+    Normal,
+    Trinket, 
+    Dead
+}
+
 public class Player: UISubject, IDamageable
 {
 
@@ -10,7 +17,12 @@ public class Player: UISubject, IDamageable
     public int wood { get; private set; }
 
     public PlayerBeacon playerBeacon{ get; private set; }
-    public Vector3 cursorPos { get; set; }
+    public Ray mouseRay { get; set; }
+    public PlayerState currentState { get; private set; }
+    public Trinket focusedTrinket { get; private set; }
+
+    [SerializeField] LayerMask trinketLayer;
+    
 
     private void Awake()
     {
@@ -25,6 +37,9 @@ public class Player: UISubject, IDamageable
         NotifyUIObservers(2, coins);
         wood = 20;
         NotifyUIObservers(3, wood);
+
+        currentState = PlayerState.Normal;
+        NotifyObservers(currentState);
     }
 
     private void FixedUpdate()
@@ -59,7 +74,17 @@ public class Player: UISubject, IDamageable
     }
     public void SelectTrinket(int selection)
     {
+        currentState = PlayerState.Trinket;
+        NotifyUIObservers(10, 1);
+        NotifyObservers(currentState);
         NotifyObservers(selection);
+    }
+
+    public void TriggerNormalMode()
+    {
+        currentState = PlayerState.Normal;
+        NotifyObservers(currentState);
+        NotifyUIObservers(10, 0);
     }
 
     public void Purchase()
@@ -67,9 +92,33 @@ public class Player: UISubject, IDamageable
         NotifyObservers(0);
     }
 
+    public void UpgradeTrinket()
+    {
+        focusedTrinket.Upgrade();
+        NotifyUIObservers(focusedTrinket);
+    }
+
+    public void ViewTrinket(Camera cam)
+    {
+        RaycastHit hit;
+        Physics.Raycast(mouseRay, out hit, 100, trinketLayer);
+
+        if (hit.collider != null)
+        {
+            focusedTrinket = hit.collider.gameObject.GetComponent<Trinket>();
+            NotifyUIObservers(focusedTrinket);
+        }
+        //else
+        //{
+        //    focusedTrinket = null;
+        //    NotifyUIObservers(11, 0);
+        //}
+    }
+
     public void Die()
     {
-        NotifyObservers(30);
+        currentState = PlayerState.Dead;
+        NotifyObservers(currentState);
         Destroy(this.gameObject);
     }
 }

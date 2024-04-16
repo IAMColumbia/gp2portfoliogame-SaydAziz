@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,14 @@ public class UIManager : MonoBehaviour, IUIObserver
     [SerializeField] TMP_Text wave;
     [SerializeField] TMP_Text highScore;
     [SerializeField] Slider healthBar;
+
+
+    [SerializeField] GameObject trinketMenu;
+    [SerializeField] GameObject trinketFocus;
+
+    //TrinketFocus
+    [SerializeField] TMP_Text trinketLevel;
+
     public void NotifyUI(int id, int content)
     {
         switch (id)
@@ -34,8 +43,20 @@ public class UIManager : MonoBehaviour, IUIObserver
             case 4:
                 highScore.text = "High Score: " + content;
                 break;
+            case 10:
+                trinketMenu.SetActive(Convert.ToBoolean(content));
+                trinketFocus.SetActive(false); 
+                break;
+;           //case 11:
         }
     }
+
+    public void NotifyUI(Trinket trinket)
+    {
+            trinketLevel.text = "Level " + trinket.GetLevel();
+            trinketFocus.SetActive(true);
+    }
+
 
     // Start is called before the first frame update
     void Awake()
