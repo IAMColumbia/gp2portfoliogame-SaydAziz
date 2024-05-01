@@ -68,6 +68,18 @@ public class TrinketManager : MonoBehaviour, IObserver
             Instantiate(trinketPrefabs[selectedTrinket], trinketShadows[selectedTrinket].transform.position, UnityEngine.Quaternion.identity);
         }
     }
+    public void Upgrade()
+    {
+        var trinket = GameManager.Instance.focusedTrinket;
+        int coin = trinketPrefabs[selectedTrinket].GetComponent<Trinket>().GetCoinUpgradePrice();
+        int wood = trinketPrefabs[selectedTrinket].GetComponent<Trinket>().GetWoodUpgradePrice();
+        if (player.coins - coin >= 0 && player.wood - wood >= 0 && trinket.GetLevel() < trinket.GetMaxLevel())
+        {
+            player.AddCoin(-coin);
+            player.AddWood(-wood);
+            trinket.Upgrade();
+        }
+    }
 
     private void StateSwitch()
     {
@@ -88,12 +100,19 @@ public class TrinketManager : MonoBehaviour, IObserver
             if (id == 0)
             {
                 Place();
-                return;
             }
             else if (id < 5)
             {
                 SelectTrinket(id);
             }
+        }
+        else if (pState == PlayerState.Normal)
+        {
+            if (id == 40)
+            {
+                Upgrade();
+            }
+
         }
     }
     public void OnNotify(PlayerState state)

@@ -9,13 +9,13 @@ public abstract class Trinket : MonoBehaviour
     protected int trinketLevel = 1;
 
     public abstract GameObject GetShadow();
+    public abstract int GetCoinUpgradePrice();
+    public abstract int GetWoodUpgradePrice();
     public abstract int GetCoinPrice();
     public abstract int GetWoodPrice();
-    public void Upgrade()
-    {
-        Debug.Log("UPGRADED");
-        trinketLevel++;
-    }
+    public abstract string GetName();
+    public abstract void Upgrade();
+    public abstract int GetMaxLevel();
     public int GetLevel()
     {
         return trinketLevel;

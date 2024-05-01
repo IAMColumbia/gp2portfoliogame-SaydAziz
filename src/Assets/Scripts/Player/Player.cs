@@ -94,7 +94,7 @@ public class Player: UISubject, IDamageable
 
     public void UpgradeTrinket()
     {
-        focusedTrinket.Upgrade();
+        NotifyObservers(40);
         NotifyUIObservers(focusedTrinket);
     }
 
@@ -106,6 +106,7 @@ public class Player: UISubject, IDamageable
         if (hit.collider != null)
         {
             focusedTrinket = hit.collider.gameObject.GetComponent<Trinket>();
+            GameManager.Instance.focusedTrinket = focusedTrinket;
             NotifyUIObservers(focusedTrinket);
         }
         //else

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour, IObserver
     [SerializeField] Player player;
     [SerializeField] Menu pauseMenu;
     [SerializeField] WaveManager waveManager;
+    public Trinket focusedTrinket;
 
     public static GameManager Instance;
 
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour, IObserver
 
     public void UpgradeTrinket()
     {
-        Debug.Log("Upgraded!!!!!!!");
         player.UpgradeTrinket();
+
     }
 
 

@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee5b9521f1feb9478335d846434bbba, type: 3}
   m_Name: FountainData
   m_EditorClassIdentifier: 
-  trinketName: Heal Fountain
-  trinketCoinPrice: 10
-  trinketWoodPrice: 10
+  trinketName: Healer
+  trinketCoinUpgradePrice: 50
+  trinketWoodUpgradePrice: 15
+  trinketCoinPrice: 80
+  trinketWoodPrice: 30
+  maxLevel: 4
   fireRate: 5
   shadowPrefab: {fileID: 1157400925597464107, guid: 9e6101ca1cdff2249bdaa1daabe43606, type: 3}
   trinketRange: 3

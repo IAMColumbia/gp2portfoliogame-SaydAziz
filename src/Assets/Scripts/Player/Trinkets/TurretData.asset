@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: TurretData
   m_EditorClassIdentifier: 
   trinketName: Turret
-  trinketCoinPrice: 10
-  trinketWoodPrice: 10
+  trinketCoinUpgradePrice: 25
+  trinketWoodUpgradePrice: 5
+  trinketCoinPrice: 50
+  trinketWoodPrice: 20
+  maxLevel: 5
   fireRate: 7
   shadowPrefab: {fileID: 1151475266784756243, guid: 415d3d5aae61abe4e84fb48d140ecb49, type: 3}
   trinketRange: 15
   bulletPrefab: {fileID: 3112550180195920876, guid: cbdd228173ac0984a899cd94a6e04ae8, type: 3}
-  damage: 100
+  damage: 10
   targetMask:
     serializedVersion: 2
     m_Bits: 128

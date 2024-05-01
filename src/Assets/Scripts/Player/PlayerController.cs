@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        rb.drag = moveDrag; 
+        rb.drag = moveDrag;
+        player.TriggerNormalMode();
     }
 
     private void FixedUpdate()

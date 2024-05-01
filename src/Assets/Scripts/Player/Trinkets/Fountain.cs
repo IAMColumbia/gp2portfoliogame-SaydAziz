@@ -50,6 +50,27 @@ public class Fountain : Trinket
     {
         return data.shadowPrefab;
     }
+    public override int GetMaxLevel()
+    {
+        return data.maxLevel;
+    }
+    public override void Upgrade()
+    {
+        trinketLevel++;
+        Debug.Log("UPGRADED");
+    }
+    public override string GetName()
+    {
+        return data.trinketName;
+    }
+    public override int GetCoinUpgradePrice()
+    {
+        return data.trinketCoinUpgradePrice;
+    }
+    public override int GetWoodUpgradePrice()
+    {
+        return data.trinketWoodUpgradePrice;
+    }
     public override int GetCoinPrice()
     {
         return data.trinketCoinPrice;

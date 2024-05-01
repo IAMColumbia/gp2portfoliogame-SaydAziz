@@ -5,25 +5,32 @@ using UnityEngine;
 
 public class Enemy: MonoBehaviour, IDamageable
 {
-    [SerializeField] NavMeshAgent agent;
-    LayerMask playerMask;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected GameObject attackModel;
+    protected LayerMask playerMask;
 
     public PlayerBeacon player;
 
     //Stats
-    [SerializeField] float health;
-    [SerializeField] int damage;
-    [SerializeField] float attackCooldown;
-    [SerializeField] float attackRange;
+    [SerializeField] protected float health;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float attackCooldown;
+    [SerializeField] protected float modelTimer;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected float moveSpeed;
+
 
     //function
-    bool canAttack = true;
-    bool playerInRange = false;
+    protected bool canAttack = true;
+    protected bool playerInRange = false;
     
     void Awake()
     {
         playerMask = LayerMask.GetMask("Player");
-        
+    }
+    void Start()
+    {
+        agent.speed = moveSpeed;
     }
 
     private void OnDrawGizmos()
@@ -60,16 +67,17 @@ public class Enemy: MonoBehaviour, IDamageable
         
     }
 
-    void Attack()
+    protected virtual void Attack()
     {
 
         if (canAttack)
         {
             RaycastHit damageReciever;
             canAttack = false;
+            attackModel.SetActive(true);
             if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out damageReciever, transform.rotation, attackRange, playerMask))
             {
-                
+                 
                 IDamageable reciever = damageReciever.collider.gameObject.GetComponent<IDamageable>();
                 if (reciever != null)
                 {
@@ -77,6 +85,7 @@ public class Enemy: MonoBehaviour, IDamageable
                 }
             }
             Invoke("ResetCooldown", attackCooldown);
+            Invoke("ModelHide", modelTimer);
 
         }
     }
@@ -84,6 +93,10 @@ public class Enemy: MonoBehaviour, IDamageable
     void ResetCooldown()
     {
         canAttack = true;
+    }
+    void ModelHide()
+    {
+        attackModel.SetActive(false);
     }
 
     public void TakeDamage(int damage)

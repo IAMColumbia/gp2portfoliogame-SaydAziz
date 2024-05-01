@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemySpawner: Spawner 
 {
+    [SerializeField] protected List<GameObject> reacherPool;
+    [SerializeField] protected List<GameObject> tankerPool;
+
     [SerializeField] int crowdSpread;
     [SerializeField] int maxCrowd;
 
@@ -11,18 +14,47 @@ public class EnemySpawner: Spawner
 
     //Spawner Values
     int crowdSize;
+    public bool willSpawn;
+    public float spawnCredits;
 
     // Start is called before the first frame update
     void Start()
     {
+        willSpawn = true;
         playerBeacon = GameObject.Find("Player").GetComponent<Player>().playerBeacon;
-        entityPool = GeneratePoolEntities(entityPrefabs[0], 300);
+        entityPool = GeneratePoolEntities(entityPrefabs[0], 100);
+        reacherPool = GeneratePoolEntities(entityPrefabs[1], 50);
+        tankerPool = GeneratePoolEntities(entityPrefabs[2], 10);
+        spawnCredits = 15;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    
+    private List<GameObject> SelectPool()
+    {
+        Debug.Log("Selecting pool");
+        if (spawnCredits - 100 >= 0)
+        {
+            spawnCredits -= 100;
+            return tankerPool;
+        }
+        else if (spawnCredits - 20 >= 0)
+        {
+            spawnCredits -= 15;
+            return reacherPool;
+        }
+        else if (spawnCredits - 0.5f >= 0)
+        {
+            spawnCredits -= 0.5f;
+            return entityPool;
+        }
+
+        willSpawn = false;
+        return null;
     }
 
     public override void SpawnEntity()
@@ -33,7 +65,7 @@ public class EnemySpawner: Spawner
         for (int i = 0; i < crowdSize; i++)
         {
             spawnCenter += new Vector3(Random.Range(-crowdSpread, crowdSpread), 0, Random.Range(-crowdSpread, crowdSpread));
-            GameObject entity = RequestEntity(0, spawnCenter);
+            GameObject entity = RequestEntity(spawnCenter);
         }
     }
 
@@ -57,9 +89,11 @@ public class EnemySpawner: Spawner
         }
     }
 
-    protected override GameObject RequestEntity(int entityID, Vector3 location) 
+    protected override GameObject RequestEntity(Vector3 location) 
     {
-        foreach (GameObject go in entityPool)
+        List<GameObject> selectedPool = SelectPool();
+
+        foreach (GameObject go in selectedPool)
         {
             if (go.activeInHierarchy == false)
             {
@@ -69,13 +103,13 @@ public class EnemySpawner: Spawner
             }
         }
 
-        PopulatePool(entityPool, entityPool[0], 50);
+        PopulatePool(selectedPool, selectedPool[0], 50);
 
 
         //GameObject newEntity = Instantiate(entityPrefabs[entityID]);
         //newEntity.transform.parent = this.transform;
         //entityPool.Add(newEntity);
-        GameObject newEntity = entityPool[entityPool.Count - 1];
+        GameObject newEntity = selectedPool[selectedPool.Count - 1];
         newEntity.SetActive(true);
         
         return newEntity;

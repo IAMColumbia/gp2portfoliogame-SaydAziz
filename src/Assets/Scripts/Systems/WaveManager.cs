@@ -35,12 +35,19 @@ public class WaveManager : UISubject
     {
         if (inWave)
         {
-            if (canSpawn)
+            if (((EnemySpawner)spawners[0]).willSpawn == true)
             {
-                spawners[0].SpawnEntity();
-                canSpawn = false;
-                Invoke("ResetSpawnInterval", spawnInterval);
+                Debug.Log("AttemptingSpawn");
+                if (canSpawn)
+                {
+                    spawners[0].SpawnEntity();
+                    canSpawn = false;
+                    Invoke("ResetSpawnInterval", spawnInterval);
+                }
+                return;
             }
+            CancelInvoke();
+            EndWave();
         }
     }
 
@@ -58,8 +65,10 @@ public class WaveManager : UISubject
     }
     void EndWave()
     {
+        ((EnemySpawner)spawners[0]).willSpawn = true;
         inWave = false;
         currentWave++;
+        ((EnemySpawner)spawners[0]).spawnCredits = 15 * (1 + (currentWave/2));
         NotifyUIObservers(1, currentWave);
         spawners[1].SpawnEntity();
         spawnInterval = spawnInterval * Mathf.Pow(scaleFactor, -currentWave); 

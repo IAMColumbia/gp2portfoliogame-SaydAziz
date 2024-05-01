@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour, IUIObserver
 
     //TrinketFocus
     [SerializeField] TMP_Text trinketLevel;
+    [SerializeField] TMP_Text trinketName;
 
     public void NotifyUI(int id, int content)
     {
@@ -53,7 +54,15 @@ public class UIManager : MonoBehaviour, IUIObserver
 
     public void NotifyUI(Trinket trinket)
     {
+        trinketName.text = trinket.GetName();
+        if (trinket.GetLevel() != trinket.GetMaxLevel())
+        {
             trinketLevel.text = "Level " + trinket.GetLevel();
+        }
+        else
+        {
+            trinketLevel.text = "Level MAX";
+        }
             trinketFocus.SetActive(true);
     }
 

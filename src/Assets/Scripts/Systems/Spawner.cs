@@ -44,7 +44,7 @@ public abstract class Spawner : MonoBehaviour
         }
     }
 
-    protected virtual GameObject RequestEntity(int entityID, Vector3 location) 
+    protected virtual GameObject RequestEntity(Vector3 location) 
     {
         foreach (GameObject go in entityPool)
         {
