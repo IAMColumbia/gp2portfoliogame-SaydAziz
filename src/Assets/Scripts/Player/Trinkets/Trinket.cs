@@ -7,6 +7,7 @@ public abstract class Trinket : MonoBehaviour
 {
     protected bool canShoot = true;
     protected int trinketLevel = 1;
+    [SerializeField] protected TrinketData data;
 
     public abstract GameObject GetShadow();
     public abstract int GetCoinUpgradePrice();

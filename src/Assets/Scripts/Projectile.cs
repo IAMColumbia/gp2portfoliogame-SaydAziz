@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
                 targetEnemy = null;
                 return;
             }
-            Vector3 targetLoc = new Vector3(targetEnemy.transform.position.x, transform.position.y, targetEnemy.transform.position.z);
+            Vector3 targetLoc = new Vector3(targetEnemy.transform.position.x, targetEnemy.transform.position.y, targetEnemy.transform.position.z);
             transform.LookAt(targetLoc);
             rb.velocity = transform.forward * projectileSpeed;
 

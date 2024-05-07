@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bf6a46637b7d64f9556751e66a3fe6, type: 3}
+  m_Name: SniperData
+  m_EditorClassIdentifier: 
+  trinketName: Sniper
+  trinketCoinUpgradePrice: 200
+  trinketWoodUpgradePrice: 15
+  trinketCoinPrice: 200
+  trinketWoodPrice: 50
+  maxLevel: 2
+  fireRate: 4
+  shadowPrefab: {fileID: 6410528429104179439, guid: 636307ebb836e8f4fa474eb2c52de530, type: 3}
+  trinketRange: 45
+  bulletPrefab: {fileID: 3112550180195920876, guid: cbdd228173ac0984a899cd94a6e04ae8, type: 3}
+  damage: 30
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128

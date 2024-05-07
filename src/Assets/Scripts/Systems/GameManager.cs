@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour, IObserver
     private void Start()
     {
         player.AddObserver(this);
+        //QualitySettings.vSyncCount = 1;
+        //Application.targetFrameRate = 60;
     }
 
     public void AddCoin(int value)

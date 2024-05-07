@@ -1,1 +1,14 @@
-Release Notes version 3 Final
+Release Notes version 4 Final
+
+* Trinkets now use the observer pattern to pull up the upgrade UI when clicked on.
+* Enemies now pull data from scriptable objects to create different enemy types.
+* Trinkets also do the same for their data/stats.
+* Object pools are now stored in respective dictionaries to allow for dynamic allocation of pools and self setup depending on enemy/resource types included.
+* Wave system now scales with different enemy types spawning based on a spawn cost/credit system with a logarithmic difficulty curve for spawnrates.
+* Added Reacher and Tanker enemy types.
+* Added Sniper and Wood generator towers.
+* Enemies now show when they attack.
+* Implemented new system to validate tower placements to prevent object intersection.
+* Added level with landmarks so player is less lost.
+* High score is now shown in the main menu.
+* Trinkets now inherit from one data scriptable object but will cast to its specific instance if needed.

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee5b9521f1feb9478335d846434bbba, type: 3}
+  m_Name: ChopperData
+  m_EditorClassIdentifier: 
+  trinketName: Chopper
+  trinketCoinUpgradePrice: 300
+  trinketWoodUpgradePrice: 25
+  trinketCoinPrice: 300
+  trinketWoodPrice: 80
+  maxLevel: 3
+  fireRate: 5
+  shadowPrefab: {fileID: 355945683957661975, guid: eaef22ede97de9244bb03387c3f75f6c, type: 3}
+  trinketRange: 3
+  effectAmount: 5
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  effectHealth: 0
+  effectCoin: 0
+  effectWood: 1

@@ -7,20 +7,14 @@ public class Enemy: MonoBehaviour, IDamageable
 {
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected GameObject attackModel;
+    [SerializeField] protected EnemyData data;
     protected LayerMask playerMask;
 
     public PlayerBeacon player;
 
-    //Stats
-    [SerializeField] protected float health;
-    [SerializeField] protected int damage;
-    [SerializeField] protected float attackCooldown;
-    [SerializeField] protected float modelTimer;
-    [SerializeField] protected float attackRange;
-    [SerializeField] protected float moveSpeed;
-
 
     //function
+    protected float currentHealth;
     protected bool canAttack = true;
     protected bool playerInRange = false;
     
@@ -30,7 +24,8 @@ public class Enemy: MonoBehaviour, IDamageable
     }
     void Start()
     {
-        agent.speed = moveSpeed;
+        agent.speed = data.moveSpeed;
+        currentHealth = data.health;
     }
 
     private void OnDrawGizmos()
@@ -41,12 +36,12 @@ public class Enemy: MonoBehaviour, IDamageable
     Vector3 playerLoc;
     private void FixedUpdate()
     {
-        if (health <= 0 )
+        if (currentHealth <= 0 )
         {
             Die();
         }
 
-        playerInRange = Physics.CheckSphere(transform.position, attackRange, playerMask); 
+        playerInRange = Physics.CheckSphere(transform.position, data.attackRange, playerMask); 
 
         if (!playerInRange)
         {
@@ -75,17 +70,17 @@ public class Enemy: MonoBehaviour, IDamageable
             RaycastHit damageReciever;
             canAttack = false;
             attackModel.SetActive(true);
-            if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out damageReciever, transform.rotation, attackRange, playerMask))
+            if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out damageReciever, transform.rotation, data.attackRange, playerMask))
             {
                  
                 IDamageable reciever = damageReciever.collider.gameObject.GetComponent<IDamageable>();
                 if (reciever != null)
                 {
-                    reciever.TakeDamage(damage);
+                    reciever.TakeDamage(data.damage);
                 }
             }
-            Invoke("ResetCooldown", attackCooldown);
-            Invoke("ModelHide", modelTimer);
+            Invoke("ResetCooldown", data.attackCooldown);
+            Invoke("ModelHide", data.modelTimer);
 
         }
     }
@@ -101,13 +96,18 @@ public class Enemy: MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        currentHealth -= damage;
     }
 
     public void Die()
     {
         GameManager.Instance.AddCoin(1);
         this.gameObject.SetActive(false);
-        health = 100;
+        currentHealth = data.health;
+    }
+
+    public float GetSpawnCost()
+    {
+        return data.spawnCost;
     }
 }

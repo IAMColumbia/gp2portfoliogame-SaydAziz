@@ -6,9 +6,6 @@ public class Turret : Trinket
 {
     [SerializeField] protected GameObject turretPivot;
     [SerializeField] protected Transform bulletSpawn;
-    
-    [SerializeField] protected TurretData data;
-
 
     protected GameObject target;
     private Vector3 targetPos;
@@ -16,7 +13,7 @@ public class Turret : Trinket
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, data.trinketRange);
+        Gizmos.DrawWireSphere(transform.position, ((TurretData)data).trinketRange);
     }
 
     void FixedUpdate()
@@ -24,7 +21,7 @@ public class Turret : Trinket
 
         if (target == null)
         {
-            shootQueue = Physics.OverlapSphere(transform.position, data.trinketRange, data.targetMask);
+            shootQueue = Physics.OverlapSphere(transform.position, ((TurretData)data).trinketRange, ((TurretData)data).targetMask);
         }
         else if (target.activeInHierarchy == false)
         {
@@ -48,8 +45,8 @@ public class Turret : Trinket
 
     protected virtual void Shoot()
     {
-        GameObject currentBullet = Instantiate(data.bulletPrefab, bulletSpawn);
-        currentBullet.GetComponent<Projectile>().Initialize(target, data.damage);
+        GameObject currentBullet = Instantiate(((TurretData)data).bulletPrefab, bulletSpawn);
+        currentBullet.GetComponent<Projectile>().Initialize(target, ((TurretData)data).damage);
         canShoot = false;
         Invoke("ResetShot", (data.fireRate / trinketLevel) * 0.1f);
     }

@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 7100195199763623747}
   - component: {fileID: 1215764991677465354}
   - component: {fileID: 6999591296728738828}
+  - component: {fileID: 2012700788206264016}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -198,6 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ea0ef43a4bb644ea8745b0ef88bc0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trinketLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6654638020879450481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +291,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 55ad0cb0-1aaa-4e2f-a5ee-164b18ce27ac
     m_ActionName: Base/Hotbar[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d1dc2c0f-3b06-4dd1-bf40-224493f7f604
+    m_ActionName: Base/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 985bda27-f1f1-4fbb-a568-163b2221bda2
+    m_ActionName: Base/TrinketToggle[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Base
@@ -353,3 +365,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &2012700788206264016
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230122899294988340}
+  m_Material: {fileID: 13400000, guid: 9b30f6b8eae515942b4b1d6f47d92b6e, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3019314, y: 0.16871707, z: 1.2007128}
+  m_Center: {x: 0, y: 0, z: 0}

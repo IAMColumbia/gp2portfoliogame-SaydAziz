@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemySpawner: Spawner 
 {
-    [SerializeField] protected List<GameObject> reacherPool;
-    [SerializeField] protected List<GameObject> tankerPool;
+    //[SerializeField] protected List<GameObject> reacherPool;
+    //[SerializeField] protected List<GameObject> tankerPool;
 
     [SerializeField] int crowdSpread;
     [SerializeField] int maxCrowd;
@@ -18,14 +19,15 @@ public class EnemySpawner: Spawner
     public float spawnCredits;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         willSpawn = true;
         playerBeacon = GameObject.Find("Player").GetComponent<Player>().playerBeacon;
-        entityPool = GeneratePoolEntities(entityPrefabs[0], 100);
-        reacherPool = GeneratePoolEntities(entityPrefabs[1], 50);
-        tankerPool = GeneratePoolEntities(entityPrefabs[2], 10);
+        //entityPool = GeneratePoolEntities(entityPrefabs[0], 100);
+        //reacherPool = GeneratePoolEntities(entityPrefabs[1], 50);
+        //tankerPool = GeneratePoolEntities(entityPrefabs[2], 10);
         spawnCredits = 15;
+        base.Start();
     }
 
     // Update is called once per frame
@@ -37,21 +39,31 @@ public class EnemySpawner: Spawner
     private List<GameObject> SelectPool()
     {
         Debug.Log("Selecting pool");
-        if (spawnCredits - 100 >= 0)
+
+        foreach(var pool in poolDict)
         {
-            spawnCredits -= 100;
-            return tankerPool;
+            if (spawnCredits - pool.Value[0].GetComponent<Enemy>().GetSpawnCost() >= 0)
+            {
+                spawnCredits -= pool.Value[0].GetComponent<Enemy>().GetSpawnCost();
+                return pool.Value;
+            }
         }
-        else if (spawnCredits - 20 >= 0)
-        {
-            spawnCredits -= 15;
-            return reacherPool;
-        }
-        else if (spawnCredits - 0.5f >= 0)
-        {
-            spawnCredits -= 0.5f;
-            return entityPool;
-        }
+
+        //if (spawnCredits - 100 >= 0)
+        //{
+        //    spawnCredits -= 100;
+        //    return tankerPool;
+        //}
+        //else if (spawnCredits - 20 >= 0)
+        //{
+        //    spawnCredits -= 15;
+        //    return reacherPool;
+        //}
+        //else if (spawnCredits - 0.5f >= 0)
+        //{
+        //    spawnCredits -= 0.5f;
+        //    return entityPool;
+        //}
 
         willSpawn = false;
         return null;
@@ -65,7 +77,7 @@ public class EnemySpawner: Spawner
         for (int i = 0; i < crowdSize; i++)
         {
             spawnCenter += new Vector3(Random.Range(-crowdSpread, crowdSpread), 0, Random.Range(-crowdSpread, crowdSpread));
-            GameObject entity = RequestEntity(spawnCenter);
+            GameObject entity = RequestEntity(spawnCenter, SelectPool());
         }
     }
 
@@ -89,9 +101,8 @@ public class EnemySpawner: Spawner
         }
     }
 
-    protected override GameObject RequestEntity(Vector3 location) 
+    protected override GameObject RequestEntity(Vector3 location, List<GameObject> selectedPool) 
     {
-        List<GameObject> selectedPool = SelectPool();
 
         foreach (GameObject go in selectedPool)
         {

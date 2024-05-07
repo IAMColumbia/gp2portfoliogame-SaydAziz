@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: FountainData
   m_EditorClassIdentifier: 
   trinketName: Healer
-  trinketCoinUpgradePrice: 50
+  trinketCoinUpgradePrice: 150
   trinketWoodUpgradePrice: 15
-  trinketCoinPrice: 80
-  trinketWoodPrice: 30
+  trinketCoinPrice: 150
+  trinketWoodPrice: 50
   maxLevel: 4
   fireRate: 5
   shadowPrefab: {fileID: 1157400925597464107, guid: 9e6101ca1cdff2249bdaa1daabe43606, type: 3}
@@ -25,3 +25,6 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 8
+  effectHealth: 1
+  effectCoin: 0
+  effectWood: 0

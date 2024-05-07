@@ -8,4 +8,7 @@ public class FountainData : TrinketData
     public float trinketRange;
     public int effectAmount;
     public LayerMask targetMask;
+    public bool effectHealth;
+    public bool effectCoin;
+    public bool effectWood;
 }

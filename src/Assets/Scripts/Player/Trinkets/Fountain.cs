@@ -8,10 +8,9 @@ public class Fountain : Trinket
     [SerializeField] protected SphereCollider effectRange;
     protected Player target;
 
-    [SerializeField] protected FountainData data;
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, data.trinketRange);
+        Gizmos.DrawWireSphere(transform.position, ((FountainData)data).trinketRange);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +25,7 @@ public class Fountain : Trinket
 
     private void Start()
     {
-        effectRange.radius = data.trinketRange;
+        effectRange.radius = ((FountainData)data).trinketRange;
     }
 
     private void FixedUpdate()
@@ -41,7 +40,18 @@ public class Fountain : Trinket
     }
     protected virtual void ApplyEffect()
     {
-        target.TakeDamage(-data.effectAmount);
+        if (((FountainData)data).effectHealth)
+        {
+            target.TakeDamage(-((FountainData)data).effectAmount);
+        }
+        if (((FountainData)data).effectCoin)
+        {
+            target.AddCoin(((FountainData)data).effectAmount);
+        }
+        if (((FountainData)data).effectWood)
+        {
+            target.AddWood(((FountainData)data).effectAmount);
+        }
         canShoot = false;
         Invoke("ResetShot", data.fireRate / trinketLevel);
     }

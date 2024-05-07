@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class ResourceSpawner : Spawner 
 {
-    void Start()
-    {
-        entityPool = GeneratePoolEntities(entityPrefabs[0], 20);
-    }
-
     public override void SpawnEntity()
     {
         canSpawn = false;
-
-        foreach (GameObject go in entityPool)
+        
+        
+        for (int i = 0; i < poolDict.Count; i++)
         {
-            if (go.activeInHierarchy == false)
+            var entityPool = poolDict[i];
+            foreach (GameObject go in entityPool)
             {
-                go.transform.position = GetRandomLoc();
-                go.SetActive(true);
+                if (go.activeInHierarchy == false)
+                {
+                    go.transform.position = GetRandomLoc();
+                    go.SetActive(true);
+                }
             }
         }
     }

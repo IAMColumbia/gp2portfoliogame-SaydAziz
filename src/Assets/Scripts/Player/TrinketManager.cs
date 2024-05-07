@@ -7,6 +7,7 @@ public class TrinketManager : MonoBehaviour, IObserver
     Player player;
     PlayerState pState;
     LayerMask placeLayer;
+    LayerMask enviroLayer;
 
     [SerializeField] GameObject[] trinketPrefabs;
     [SerializeField] GameObject[] trinketShadows;
@@ -16,6 +17,7 @@ public class TrinketManager : MonoBehaviour, IObserver
 
     //Trinket values
     int selectedTrinket;
+    bool unObstructed;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class TrinketManager : MonoBehaviour, IObserver
         player.AddObserver(this);
 
         placeLayer = LayerMask.GetMask("Place");
+        enviroLayer = LayerMask.GetMask("Environment");
 
         for (int i = 0; i < trinketPrefabs.Length; i++)
         {
@@ -34,6 +37,7 @@ public class TrinketManager : MonoBehaviour, IObserver
         trinketShadows[0].SetActive(true);
 
         selectedTrinket = 0;
+        unObstructed = true;
     }
 
     // Update is called once per frame
@@ -45,7 +49,23 @@ public class TrinketManager : MonoBehaviour, IObserver
         cursorPos = hit.point;
 
         Vector3Int gridPos = grid.WorldToCell(cursorPos);
-        trinketShadows[selectedTrinket].transform.position = grid.GetCellCenterWorld(gridPos);
+
+        Collider[] Overlaps = Physics.OverlapBox(grid.GetCellCenterWorld(gridPos), new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, enviroLayer);
+
+        if (pState == PlayerState.Trinket)
+        {
+            if (Overlaps.Length == 0)
+            {
+                unObstructed = true;
+                trinketShadows[selectedTrinket].SetActive(true);
+                trinketShadows[selectedTrinket].transform.position = grid.GetCellCenterWorld(gridPos);
+            }
+            else
+            {
+                unObstructed = false;
+                trinketShadows[selectedTrinket].SetActive(false);
+            }
+        }
     }
 
 
@@ -61,7 +81,7 @@ public class TrinketManager : MonoBehaviour, IObserver
     {
         int coin = trinketPrefabs[selectedTrinket].GetComponent<Trinket>().GetCoinPrice();
         int wood = trinketPrefabs[selectedTrinket].GetComponent<Trinket>().GetWoodPrice();
-        if (player.coins - coin >= 0 && player.wood - wood >= 0)
+        if (player.coins - coin >= 0 && player.wood - wood >= 0 && unObstructed)
         {
             player.AddCoin(-coin);
             player.AddWood(-wood);
