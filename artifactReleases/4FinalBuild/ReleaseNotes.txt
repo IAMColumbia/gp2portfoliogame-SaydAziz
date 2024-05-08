@@ -12,3 +12,8 @@ Release Notes version 4 Final
 * Added level with landmarks so player is less lost.
 * High score is now shown in the main menu.
 * Trinkets now inherit from one data scriptable object but will cast to its specific instance if needed.
+
+
+Design Decisions: 
+* I decided to divide the trinkets into archetypes. There are currently the Turret, and Fountain archetypes that are represented as subclasses. They also have their respective subclass equivelents of scriptable object data classes. It is these subclasses that are then modified through scriptable object stat manipulation to create different version of their trinkets. I did this instead of just having one trinket class because there are some features and stats that the other trinkets would just not have, and I think that it would be a waste of memory to just have default value variables stored but not properly used in so many instances. This way, you have a more organized and more efficient use of scriptable object data, and guarantee that each variable has a reason to be there.
+* I also decided to make the UI manager an observer of the player, as that opens up the possibility for the addition of coop in the future, because the UI is not tightly coupled to that specific player instance.
