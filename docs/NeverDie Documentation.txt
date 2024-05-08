@@ -1,0 +1,21 @@
+﻿Game Name: NeverDie
+
+
+Short Description: A top down dynamic tower defense where you are the target defending yourself.
+
+
+Long Description: A tower defense game where you are a character running around on the map as you place towers to defend yourself. Instead of a typical tower defense where the waves try to get to the final destination on the other side of the map, the target is you. You must create a defensive perimeter around you to survive as long as you can and get to the highest round possible. However, in order to build more trinkets (towers) you need resources like wood that you must go out and find. That is why smart placement of the trinkets is important to survive. 
+
+
+Genre: 3D Top Down Dynamic Tower Defense/Wave Survival Game
+
+
+
+
+Patterns Used: 
+* Object Pooling - For spawning enemies, and bullets
+* Observer pattern - UI management, Trinket Context Menus, Enemies and other system awareness of player state
+* Singleton - Gamemanager access, Data storage for stats of enemies and trinkets
+Challenges: I had a problem where too many components needed information from my player. I did not want to have direct references to the player from a myriad of different object and vice versa, as that would interfere with the single responsibility principle, and would create a lot of unnecessary coupling which would greatly hinder scalability. I solved this with the observer pattern (although it needs some tweaks to make it a properly well implemented observer pattern). Additionally creating a raw C# object that is not a mono behavior helped me pass its information around to things like enemy instances without using too much extra memory.
+I believe that my code is maintainable. I created modular enemy, trinket/tower, spawner, and object pooling systems that all allow for the easy addition of new features, instance types. Each system is also self constructing at runtime, and will dynamically set itself up. This allows a designer to add new types and features, without touching any of the code.
+Although I finished the core systems, I did not finish the whole game. There is a bit of technical debt in the form of imperfect implementation of the observer pattern, and a little more casting of spawner trinket types than I would like, however, these issues do not hinder the scalability of the game, and are more things that I would have liked to implement better. I also think I could have improved on the object pooling system to make it more robust, and a little more dynamically constructed than I currently have it.
